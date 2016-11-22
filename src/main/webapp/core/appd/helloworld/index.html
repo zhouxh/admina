@@ -1,0 +1,466 @@
+<html>
+<head>
+<title>HelloWorld</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link rel="stylesheet" type="text/css"
+	href="../../../js/ext/4.2.1/resources/css/ext-all.css" />
+<script type="text/javascript" src="../../../js/ext/4.2.1/bootstrap.js"></script>
+<script type="text/javascript" src="../../../js/sockjsclient/sockjs.js"></script>
+<script type="text/javascript"
+	src="../../../js/ext/4.2.1/locale/ext-lang-zh_CN.js"></script>
+	
+<style type="text/css">
+	.custom .x-progress-inner{
+		height:17px;
+		backgroud:#fff;
+	}
+	/* url(images/custom-bar-red.gif) */
+	.custom .x-progress-bar{
+		height:15px;
+		backgroud:transparent  repeat-x 0 0;
+		border-top:1px solid #BEBEBE;
+		border-bottom:1px solid #EFEFEF;
+		border-right:0;
+	}
+	
+</style>
+<script type="text/javascript">
+	Ext.onReady(function() {
+		
+		 //工具栏实例
+		 var toolbar  = new Ext.toolbar.Toolbar(
+				 {
+					 renderTo:"toolbar",
+					 width:1024
+				 });
+		var fileMenu = new Ext.menu.Menu({
+			shadow:"frame",
+			allowOtherMenus:false,
+			ignoreParentClicks:true,
+			items:[
+			       	new Ext.menu.Item({
+			       		text:"新建",
+			       	    iconCls:'newIcon',
+			       		handler:onMenuItem
+			       	}),
+			       	{xtype:"textfield",hideLabel:true,width:100},
+			        {
+		            	xtype:'htmleditor',
+		            	hideLabel: true,
+		            	width:150
+		          	  }
+	              ,
+			       	{text:'颜色选择',menu:new Ext.menu.ColorPicker()},
+			       	{xtype:"datepicker"},
+			       	{
+			       		xtype:"buttongroup",
+			       		columns:3,
+			       		title:"按钮组",
+			       		items:[
+			       		       {
+			       		    	   text:"用户管理",
+			       		    	   scale:"large",
+			       		    	   colspan:3,
+			       		    	   width:170,
+			       		    	   iconCls:'userManagerIcon',
+			       		    	   iconAlign:'top'
+			       		    	},
+			       		 	{text:"新建",iconCls:'newIcon',handler:onMenuItem},
+			       			{text:"打开",iconCls:'openIcon',handler:onMenuItem},
+			       			{text:"保存",iconCls:'saveIcon',handler:onMenuItem},
+			       		       ]
+			       	},
+			       	{text:"打开",iconCls:'openIcon',handler:onMenuItem},
+			       	{text:"关闭",iconCls:'closeIcon',handler:onMenuItem}
+			       ]
+		});
+		var editMenu = new Ext.menu.Menu({
+			shadow:"drop",
+			allowOtherMenus:true,
+			items:[
+			   		{text:"复制",iconCls:'copyIcon',handler:onMenuItem},
+			       	{text:"粘贴",iconCls:'pasteIcon',handler:onMenuItem},
+			       	{text:"剪切",iconCls:'cutIcon',handler:onMenuItem}
+			       ]
+		});
+		var infoMenu = new Ext.menu.Menu({
+			ignoreParentClicks:true,
+			plain:true,
+			items:[
+			   		{text:"个人信息",menu:new Ext.menu.Menu({
+			   			ignoreParentClicks:true,
+			   			items:[
+			   			       {
+			   			    	   text:"基本信息",
+			   			    	   menu:new Ext.menu.Menu({
+			   			    		 items:[
+			   			    		 	{text:"身高",handler:onMenuItem},
+			   			    			{text:"体重",handler:onMenuItem},
+			   			    		        ]
+			   			    	   
+			   			    	   })
+			   			       }
+			   			       ]
+			   		
+			   		}),handler:onMenuItem},
+			       	{text:"公司信息",handler:onMenuItem},
+			       ]
+		});
+		var themeMenu = new Ext.menu.Menu({
+			items:[
+			       {
+			    	   text:"主体颜色",
+			    	   menu:new Ext.menu.Menu({
+			    		   items:[
+			    		          {
+			    		        	text:"红色主题",
+			    		        	checked:true,
+			    		        	group:"theme",
+			    		        	checkHandler:onItemCheck
+			    		     
+			    		          },
+			    		          {
+				    		        	text:"蓝色主题",
+				    		        	checked:false,
+				    		        	group:"theme",
+				    		        	checkHandler:onItemCheck
+				    		     
+				    		          },
+				    		          {
+					    		        	text:"黑色主题",
+					    		        	checked:false,
+					    		        	group:"theme",
+					    		        	checkHandler:onItemCheck
+					    		     
+					    		          }
+			    		          ]
+			    	   })
+			    	},{
+			    		
+			    		text:"是否启用",
+			    		checked:false
+			    	}
+			       ]
+		})
+		 toolbar.add([
+		              {text:"文件",menu:fileMenu},
+		              {text:"编辑",menu:editMenu},
+		              {text:"设置",menu:infoMenu},
+		              {text:"风格选择",menu:themeMenu},
+		              {
+		            	  text:"新建",
+		            	  type:1,
+		            	  handler:onButtonClick,
+		            	  iconCls:'newIcon'
+		              },
+		              {
+		            	  text:"打开",
+		            	  type:2,
+		            	  handler:onButtonClick,
+		            	  iconCls:'openIcon'
+		              },
+		              {
+		            	  text:"保存",
+		            	  type:3,
+		            	  handler:onButtonClick,
+		            	  iconCls:'saveIcon'
+		              },
+		              '-',
+		          	  {
+		            	xtype:'textfield',
+		            	hideLabel: true,
+		            	width:150
+		          	  }
+		              ,
+		             
+		          	  '->',
+		          	  '<a href="#">超链接</a>',
+		          	  {xtype:'tbspacer',width:50},
+		          	  '静态文本'
+		              
+		              ]);
+		function onButtonClick(btn){
+				switch(type){
+				case 1:
+					break;
+				default:
+					break;
+				}
+			
+				
+		}
+		function onMenuItem(item){
+			
+			switch(type){
+			case 1:
+				break;
+			default:
+				break;
+			}
+		}
+		
+/* 	function  initSocket(){
+		var sock = new SockJS('http://172.20.35.51:8081',null, null);
+		 sock.onopen = function() {
+		     console.log('open');
+		 };
+		 sock.onmessage = function(e) {
+		     console.log('message', e.data);
+		 };
+		 sock.onclose = function() {
+		     console.log('close');
+		 };
+
+		 sock.send('test');
+		
+	}
+	
+	initSocket();
+	function closeSocket(){
+		 sock.close();
+		
+	} */
+	function onItemCheck(item){
+			
+			switch(type){
+			case 1:
+				break;
+			default:
+				break;
+			}
+		}
+		
+		Ext.get('enableToolbar').on('click',function(){
+			toolbar.enable();
+			
+		})
+		Ext.get('disableToolbar').on('click',function(){
+			toolbar.disable();
+			
+		})
+		 
+		 
+		//Ext.MessageBox.alert("Hello World","Hello world Hello World! 111"+ Ext.Date.format(Ext.Date.now(),'yyyy-MM-dd HH:mm:ss'))
+
+		/* var config = {
+			title : "case01",
+			msg : "我的配置很简单，不信来看我的源码"+"<font color='red'>支持html格式文本</font>"
+		}
+		Ext.Msg.show(config);
+		 */
+		 
+		/* Ext.MessageBox.alert("提 示","请点击我，确定",callback); */
+		/* Ext.MessageBox.confirm("提 示","请点击我，做出选择",callback);
+		function callback(id){
+			
+			alert('单击的按钮id是：'+id);
+		}; */
+		
+		
+		//输入提示
+	/* 	 Ext.MessageBox.prompt("提 示","输入一些内容看看 :",callbackpm,this,true,"默认输入");
+		function callbackpm(id,msg){
+			
+			alert('单击的按钮id是：'+id+'\n'+'输入的内容是：'+msg);
+		}; */
+		
+		//Ext.MessageBox.wait('请等待，操作需要很长时间','提示',{text:"进度条上的文字"});
+		
+
+		//Ext.Msg.alert("提示 ","<font color='red'>支持html格式文本</font>") 
+		
+		
+		/* //Ext.MessageBox.msgButtons[0].setText("按钮1");
+		Ext.MessageBox.buttonText.ok="按钮1"
+		//Ext.MessageBox.msgButtons[1].setText("按钮2");
+		Ext.MessageBox.buttonText.yes="按钮2"
+		//Ext.MessageBox.msgButtons[2].setText("按钮3");
+		Ext.MessageBox.buttonText.no="按钮3"
+		//Ext.MessageBox.msgButtons[3].setText("按钮4");
+		Ext.MessageBox.buttonText.cancel="按钮4"
+		 Ext.MessageBox.show({
+			title:"提示",
+			msg:"我有三个按钮，和一个多行文本区",
+			modal:true,
+			prompt:true,
+			value:"请输入",
+			fn:callBackmbs,
+			buttons:Ext.Msg.YESNOCANCEL,
+			icon:Ext.Msg.QUESTION
+			
+		}) 
+		
+		function callBackmbs(id,msg){
+			
+			alert('单击的按钮id是：'+id+'\n'+'输入的内容是：'+msg);
+		};  */
+		
+		
+		//动态更新文字
+		/* var msgBox = Ext.MessageBox.show({
+			title:"提示",
+			msg:"动态更新的文字",
+			modal:true,
+			buttons:Ext.Msg.OK,
+			fn:function(){Ext.TaskManager.stop(task);
+			}
+			
+		})
+		var task = {
+			run :function(){
+				msgBox.updateText("会动的时间："+Ext.util.Format.date(new Date(),'Y-m-d g:i:s A'));
+			},
+			interval:1000
+			
+		}
+		Ext.TaskManager.start(task); */
+		
+		
+		//更新进度条
+		 /* var msgBox = Ext.MessageBox.show({
+			title:"提示",
+			msg:"动态更新的进度条和更新的文字",
+			modal:true,
+			width:300,
+			progress:true
+			
+		})
+		var count=0;
+		var percentage=0;
+		var progressText='';//进度条信息
+		var task = {
+				run :function(){
+					count++;
+					//进度
+					percentage = count/10;
+					progressText='当前完成度：'+percentage*100+'%';
+					msgBox.updateProgress(percentage,progressText,"当前时间："+Ext.util.Format.date(new Date(),'Y-m-d g:i:s A'));
+					if(count>10){
+						Ext.TaskManager.stop(task);
+						msgBox.hide();
+						
+					}
+				},
+				interval:1000
+				
+			}
+		Ext.TaskManager.start(task);  */
+		
+		//alert('Ext.Msg不会停止程序运行');
+		
+		
+		//renderTo使用
+/* 		var progressBar = new Ext.ProgressBar(
+			{
+				text:"使用renderTo为进度条定位",
+				width:300,
+				renderTo:'ProgressBar4'
+				//document.getElementById("ProgressBar1");
+			}		
+		) */
+		
+		//手动模式进度条实例
+		/* var progressBar = new Ext.ProgressBar(
+				{
+					text:"手动模式进度条实例",
+					width:300,
+					renderTo:'ProgressBar4'
+					//document.getElementById("ProgressBar1");
+				}		
+			)
+		
+		var count=0;
+		var percentage=0;
+		var progressText='';//进度条信息
+		var task = {
+				run :function(){
+					count++;
+					//进度
+					if(count>10){
+						progressBar.hide();
+						
+					}
+					percentage = count/10;
+					progressText=percentage*100+'%';
+					progressBar.updateProgress(percentage,progressText,true);
+					
+				},
+				interval:1000,
+				repeat:6
+				
+			}
+
+		Ext.TaskManager.start(task);  */ 
+		
+		//自动更新滚动条 及 //自定义样式的进度条
+		 /* var progressBar = new Ext.ProgressBar(
+				{
+					text:"working....",
+					width:300,
+					renderTo:'ProgressBar1',
+					cls:"custom"
+					//document.getElementById("ProgressBar1");
+				}		
+			)
+		 progressBar.wait({
+			duration:10000,
+			interval:1000,
+			increment:10,
+			text:'working....',
+			scope:this,
+			fn:function(){alert('更新完毕');}
+		 })  */
+		
+		
+		//表单字段实例
+		Ext.QuickTips.init();//初始化信息提示功能
+		var form = new Ext.form.Panel({
+				title:"表单",
+				height:120,
+				width:500,
+				frame:true,
+				renderTo:'form',
+				defaults:{
+					//autoFitErrors:false,
+					labelSeparator:'：',
+					labelWidth:50,
+					width:150,
+					allowBlank:false,
+					blankText:"不允许为空",
+					labelAlign:'left',
+					msgTarget:'side'
+						//{'qtip','title','under','side','none','errorMsg'}
+				},
+				items:[
+				       {
+				    	   xtype:"textfield",
+				    	   fieldLabel:"姓名"
+				       },
+				       {
+				    	   xtype:"numberfield",
+				    	   fieldLabel:"年龄"
+				       }
+				       ]
+			
+			})
+		 
+		
+		
+	});
+</script>
+
+</head>
+<body>
+	<div id ="toolbar"></div>
+	<div>
+		<button id="enableToolbar" >启用工具栏</button>
+		<button id="disableToolbar" >禁用工具栏</button>
+	</div>
+	<div id ="ProgressBar1"></div>
+	<table id ="ProgressBar2"></table>
+	<table ><tr id ="ProgressBar3"></tr></table>
+	<table><tr><td  id ="ProgressBar4"></td></tr></table>
+	<div id="form"> </div>
+	<div id="errorMsg"></div>
+</body>
+</html>
